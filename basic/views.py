@@ -22,12 +22,15 @@ def person_list(request):
 
 
 def person_retrieve(request, pk):
-    data = get_object_or_404(PersonModel, pk=pk)
+    # person = get_object_or_404(PersonModel, pk=pk) or
+    data = PersonModel.objects.get(pk=pk)
     return render(request, 'person_detail.html', {'data': data})
 
 
 def person_update(request, pk):
-    person = get_object_or_404(PersonModel, pk=pk)
+
+    # person = get_object_or_404(PersonModel, pk=pk) or
+    person = PersonModel.objects.get(pk=pk)
     if request.method == 'POST':
         form = PersonForm(request.POST, instance=person)
         if form.is_valid():
@@ -78,3 +81,8 @@ class PersonDeleteView(DeleteView):
     model = PersonModel
     template_name = 'person_delete.html'
     success_url = reverse_lazy('person_list')
+
+
+
+
+
